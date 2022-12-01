@@ -27,7 +27,7 @@ void main()
 }
 """
 
-def calculateMatrix(angle):
+def calculateMatrix(angle, width, height):
     i = glm.mat4(1)
     Translate = glm.translate(i, glm.vec3(0, 0, 0))
     Rotate = glm.rotate(i, glm.radians(angle), glm.vec3(0, 1, 0))
@@ -43,12 +43,12 @@ def calculateMatrix(angle):
 
     Projection = glm.perspective(
         glm.radians(45),
-        1600/1200,
+        width/height,
         0.1,
         1000.0
     )
 
-    amatrix = Projection * View * Model
+    matrix = Projection * View * Model
 
     glUniformMatrix4fv(
         glGetUniformLocation(
@@ -56,9 +56,9 @@ def calculateMatrix(angle):
                 compileShader(fragment_shader , GL_FRAGMENT_SHADER),
                 compileShader(vertex_shader, GL_VERTEX_SHADER)
             ), 
-            'amatrix'
+            'matrix'
         ),
         1,
         GL_FALSE,
-        glm.value_ptr(amatrix)
+        glm.value_ptr(matrix)
     )
