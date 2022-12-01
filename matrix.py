@@ -36,7 +36,7 @@ def calculateMatrix(angle):
     Model = Translate * Rotate * Scale
 
     View = glm.lookAt(
-        glm.vec3(0, 0, 5),
+        glm.vec3(0, 0, 15),
         glm.vec3(0, 0, 0),
         glm.vec3(0, 1, 0)
     )
@@ -50,4 +50,15 @@ def calculateMatrix(angle):
 
     amatrix = Projection * View * Model
 
-
+    glUniformMatrix4fv(
+        glGetUniformLocation(
+            compileProgram(
+                compileShader(fragment_shader , GL_FRAGMENT_SHADER),
+                compileShader(vertex_shader, GL_VERTEX_SHADER)
+            ), 
+            'amatrix'
+        ),
+        1,
+        GL_FALSE,
+        glm.value_ptr(amatrix)
+    )
