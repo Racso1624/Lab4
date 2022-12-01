@@ -23,7 +23,8 @@ model = Obj('./human.obj')
 vertex = array(model.vertices)
 
 degrees = 0
-while (running):
+var =  True
+while var:
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
@@ -31,11 +32,11 @@ while (running):
   second_color = random.random()
   third_color = random.random()
 
+  shader = calculateMatrix(degrees, 1080, 720)
+
   full_color = glm.vec3(first_color, second_color, third_color)
   first_color_location = glGetUniformLocation(shader, "color")
   glUniform3fv(first_color_location, 1, glm.value_ptr(full_color))
-
-  calculateMatrix(degrees)
 
   pygame.time.wait(100)
 

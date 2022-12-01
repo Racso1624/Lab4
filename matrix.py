@@ -50,15 +50,16 @@ def calculateMatrix(angle, width, height):
 
     matrix = Projection * View * Model
 
+    shader = compileProgram(compileShader(fragment_shader , GL_FRAGMENT_SHADER),compileShader(vertex_shader, GL_VERTEX_SHADER))
+
     glUniformMatrix4fv(
         glGetUniformLocation(
-            compileProgram(
-                compileShader(fragment_shader , GL_FRAGMENT_SHADER),
-                compileShader(vertex_shader, GL_VERTEX_SHADER)
-            ), 
+            shader,
             'matrix'
         ),
         1,
         GL_FALSE,
         glm.value_ptr(matrix)
     )
+
+    return shader
